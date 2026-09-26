@@ -2,7 +2,7 @@ package parking;
 
 /**
  * User interface class that reads and processes command lines.
- * @author YOUR NAME, PARTNER NAME
+ * @author Alisha Sharma, Ann Sujan
  */
 public class Operation {
 

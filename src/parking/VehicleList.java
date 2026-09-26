@@ -2,7 +2,7 @@ package parking;
 
 /**
  * Resizable array holding the list of vehicles.
- * @author YOUR NAME
+ * @author Alisha Sharma
  */
 public class VehicleList {
     private static final int LENGTH = 4;

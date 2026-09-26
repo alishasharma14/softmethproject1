@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A parking deck.
- * @author YOUR NAME, PARTNER NAME
+ * @author Alisha Sharma, Ann Sujan
  */
 public class Deck {
     public static final int MAXCAPACITY = 6;

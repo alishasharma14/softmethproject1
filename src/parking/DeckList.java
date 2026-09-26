@@ -2,7 +2,7 @@ package parking;
 
 /**
  * Resizable array holding the list of decks.
- * @author YOUR NAME
+ * @author Alisha Sharma
  */
 public class DeckList {
     private static final int ARRAYLENGTH = 4;

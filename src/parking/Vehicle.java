@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A registered vehicle with its parking history.
- * @author YOUR NAME
+ * @author Alisha Sharma
  */
 public class Vehicle {
     private String plate;     //exactly 7 characters
