@@ -2,6 +2,7 @@ package parking;
 
 /**
  * A registered vehicle with its parking history.
+ *
  * @author Alisha Sharma
  */
 public class Vehicle {
@@ -12,6 +13,6 @@ public class Vehicle {
      * Prints the parking history.
      */
     public void printHistory() {
-        // TODO (PARTNER)
+        // TODO Ann
     }
 }

@@ -2,6 +2,7 @@ package parking;
 
 /**
  * A parking deck.
+ *
  * @author Alisha Sharma, Ann Sujan
  */
 public class Deck {
@@ -13,7 +14,13 @@ public class Deck {
     private int numParked;       //number of parking activities in array
     private boolean open;
 
-    private int find(Vehicle vehicle) { return -1; } // TODO (PARTNER)
-    public void enter(Parking parking) { }           // TODO (PARTNER)
-    public void exit(Parking parking) { }            // TODO (PARTNER)
+    private int find(Vehicle vehicle) {
+        return -1;
+    } // TODO ann
+
+    public void enter(Parking parking) {
+    }           // TODO ann
+
+    public void exit(Parking parking) {
+    }            // TODO ann
 }

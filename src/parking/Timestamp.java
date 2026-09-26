@@ -11,6 +11,6 @@ public class Timestamp implements Comparable<Timestamp> {
 
     @Override
     public int compareTo(Timestamp other) {
-        return 0; // TODO (PARTNER)
+        return 0; // TODO Ann
     }
 }

@@ -2,6 +2,7 @@ package parking;
 
 /**
  * The cities where the parking decks are located, with county and zip code.
+ *
  * @author Alisha Sharma
  */
 public enum Location {
@@ -17,8 +18,9 @@ public enum Location {
 
     /**
      * Creates a location with its county and zip code.
+     *
      * @param county the county the city is in.
-     * @param zip the zip code of the city.
+     * @param zip    the zip code of the city.
      */
     Location(String county, String zip) {
         this.county = county;
@@ -27,6 +29,7 @@ public enum Location {
 
     /**
      * Returns the county of this location.
+     *
      * @return the county name.
      */
     public String getCounty() {
@@ -35,6 +38,7 @@ public enum Location {
 
     /**
      * Returns the zip code of this location.
+     *
      * @return the zip code.
      */
     public String getZip() {
@@ -43,6 +47,7 @@ public enum Location {
 
     /**
      * Finds the location that matches a city name, ignoring upper/lower case.
+     *
      * @param city the city name typed by the user.
      * @return the matching location, or null if the city is not valid.
      */

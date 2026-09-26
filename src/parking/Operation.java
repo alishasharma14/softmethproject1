@@ -2,6 +2,7 @@ package parking;
 
 /**
  * User interface class that reads and processes command lines.
+ *
  * @author Alisha Sharma, Ann Sujan
  */
 public class Operation {
@@ -10,36 +11,36 @@ public class Operation {
      * Reads and processes command lines until Q is entered.
      */
     public void run() {
-        // TODO (YOU): print start message, while loop, call helpers, handle Q
+        // TODO alisha: print start message, while loop, call helpers, handle Q
     }
 
     // ===== YOUR COMMANDS =====
     private void registerVehicle(String commandLine) {
-        // TODO (YOU): A command
+        //TODO alisha: A command
     }
 
     private void removeVehicle(String commandLine) {
-        // TODO (YOU): R command
+        // TODO alisha: R command
     }
 
     private void openDeck(String commandLine) {
-        // TODO (YOU): O command
+        // TODO alisha: O command
     }
 
     private void closeDeck(String commandLine) {
-        // TODO (YOU): C command
+        // TODO alisha: C command
     }
 
     // ===== PARTNER'S COMMANDS =====
     private void enterDeck(String commandLine) {
-        // TODO (PARTNER): E command
+        // TODO ann: E command
     }
 
     private void exitDeck(String commandLine) {
-        // TODO (PARTNER): X command
+        // TODO ann: X command
     }
 
     private void printCommands(String commandLine) {
-        // TODO (PARTNER): PP, PD, PH commands
+        // TODO ann: PP, PD, PH commands
     }
 }
