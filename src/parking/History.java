@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A node in the singly linked list of parking history.
- * @author Ann Sujan
+ * @author Ann Sajan
  */
 public class History {
     private Parking parking;  //the parking activity
