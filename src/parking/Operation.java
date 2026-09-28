@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 /**
  * The user interface class that reads and processes command lines
  * from the terminal until there is a Q command is entered.
- * @author Alisha Sharma, PARTNER NAME
+ * @author Alisha Sharma, Ann Sajan
  */
 public class Operation {
     private static final int DECK_DATA_TOKENS = 3;
