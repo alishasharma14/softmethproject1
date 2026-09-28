@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A parking deck with its location, operating hours, and parked vehicles.
- * @author Alisha Sharma, Ann Sujan
+ * @author Alisha Sharma, Ann Sajan
  */
 public class Deck {
     public static final int MAXCAPACITY = 6;
