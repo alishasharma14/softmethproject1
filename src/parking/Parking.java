@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A parking activity.
- * @author Ann Sujan
+ * @author Ann Sajan
  */
 public class Parking {
     private Vehicle vehicle;
