@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A date and time.
- * @author Ann Sujan
+ * @author Ann Sajan
  */
 public class Timestamp implements Comparable<Timestamp> {
     private Date date;
