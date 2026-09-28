@@ -2,7 +2,7 @@ package parking;
 
 /**
  * A calendar date.
- * @author Ann Sujan
+ * @author Ann Sajan
  */
 public class Date implements Comparable<Date> {
     private int year;
