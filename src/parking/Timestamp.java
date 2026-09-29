@@ -1,5 +1,7 @@
 package parking;
 
+import java.util.Calendar;
+
 /**
  * A date and time.
  * @author Ann Sajan
@@ -15,6 +17,8 @@ public class Timestamp implements Comparable<Timestamp> {
     public static final int MAX_HOUR = 23;
     /** The largest valid minute. */
     public static final int MAX_MINUTE = 59;
+     /** The number of days a vehicle may stay in a deck. */
+    private static final int MAX_STAY_DAYS = 2;
 
 /**
  * Creates a timestamp from a date, an hour, and a minute.
@@ -48,12 +52,30 @@ public class Timestamp implements Comparable<Timestamp> {
     public int getMinute(){
         return minute;
     }
+
+     /**
+     * Checks if this timestamp is more than two days after another.
+     * @param entered the earlier timestamp
+     * @return true if more than two days later, false otherwise
+     */
+    public boolean exceedsTwoDays(Timestamp entered) {
+        Calendar limit = Calendar.getInstance();
+        limit.clear();
+        limit.set(entered.date.getYear(), entered.date.getMonth() - Date.JAN,
+                entered.date.getDay());
+        limit.add(Calendar.DAY_OF_MONTH, MAX_STAY_DAYS);
+        Date limitDate = new Date(limit.get(Calendar.YEAR),
+                limit.get(Calendar.MONTH) + Date.JAN,
+                limit.get(Calendar.DAY_OF_MONTH));
+        Timestamp limitStamp = new Timestamp(limitDate, entered.hour, entered.minute);
+        return compareTo(limitStamp) > 0;
+    }
+ 
 /**
  * Compares this timestamp to another, by date, then hour, then minute.
  * @param other the timestamp to compare to
  * @return -1 if this timestamp is earlier, 1 if later, 0 if the same
  */
-
     @Override
     public int compareTo(Timestamp other) {
         int dateComparison = date.compareTo(other.date);
