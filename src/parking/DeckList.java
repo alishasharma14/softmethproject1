@@ -177,6 +177,8 @@ public class DeckList {
      * @param deck the deck to print.
      */
     public void printVehicles(Deck deck) {
-        // TODO Ann
+        int index = find(deck);
+        if (index != NOTFOUND) {
+        decks[index].printByPlate();
     }
 }
