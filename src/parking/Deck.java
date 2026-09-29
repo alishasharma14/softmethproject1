@@ -45,7 +45,30 @@ public class Deck {
      * @return the index of the parking activity or NOTFOUND if not parked.
      */
     private int find(Vehicle vehicle) {
-        return NOTFOUND; // TODO ann
+        for(int i = 0; i< numParked; i++){
+          if (parkings[i].getVehicle().equals(vehicle)){
+              return i;
+          }
+        }
+        return NOTFOUND; 
+    }
+    /**
+     * Sorts the parking activities by license plate with selection sort.
+     */
+    private void sortByPlate() {
+        for (int i = 0; i < numParked - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < numParked; j++) {
+                String plateJ = parkings[j].getVehicle().getPlate();
+                String plateMin = parkings[min].getVehicle().getPlate();
+                if (plateJ.compareTo(plateMin) < 0) {
+                    min = j;
+                }
+            }
+            Parking temp = parkings[i];
+            parkings[i] = parkings[min];
+            parkings[min] = temp;
+        }
     }
 
     /**
@@ -53,7 +76,8 @@ public class Deck {
      * @param parking the parking activity to add.
      */
     public void enter(Parking parking) {
-        // TODO ann
+        parkings[numParked] = parking;
+        numParked++;
     }
 
     /**
@@ -61,7 +85,13 @@ public class Deck {
      * @param parking the parking activity to remove.
      */
     public void exit(Parking parking) {
-        // TODO ann
+         int index = find(parking.getVehicle());
+        if (index == NOTFOUND) {
+            return;
+        }
+        numParked--;
+        parkings[index] = parkings[numParked];
+        parkings[numParked] = null;
     }
 
     /**
@@ -72,6 +102,31 @@ public class Deck {
     public boolean contains(Vehicle vehicle) {
         return find(vehicle) != NOTFOUND;
     }
+    /**
+     * Returns the parking activity of a vehicle in this deck.
+     * @param vehicle the vehicle to search for.
+     * @return the parking activity, or null if the vehicle is not parked here.
+     */
+    public Parking getParking(Vehicle vehicle) {
+    int index = find(vehicle);
+    if (index == NOTFOUND) {
+        return null;
+    }
+    return parkings[index];
+}
+    /**
+     * Prints the vehicles parked in this deck, ordered by license plate.
+     */
+    public void printByPlate() {
+        sortByPlate();
+        System.out.println("** List of vehicles in Deck# " + number
+                + ", ordered by plate **");
+        for (int i = 0; i < numParked; i++) {
+            System.out.println(parkings[i]);
+        }
+        System.out.println("** end of list **");
+    }
+
 
     /**
      * Returns the deck number.
