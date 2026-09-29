@@ -5,14 +5,21 @@ package parking;
  * @author Alisha Sharma, Ann Sajan
  */
 public class Deck {
+     /** The maximum number of vehicles any deck can hold. */
     public static final int MAXCAPACITY = 6;
+    /** The index returned when a vehicle is not found. */
     private static final int NOTFOUND = -1;
-
-    private int number;          //deck number
+    /** The deck number. */
+    private int number;          
+    /** The city where the deck is located. */
     private Location location;   //Location is an enum class
+    /** The operating hours of the deck. */
     private Hour hour;           //Hour is an enum class
-    private Parking[] parkings;  //list of parking activities
-    private int numParked;       //number of parking activities in array
+     /** The parking activities of the vehicles currently in the deck. */
+    private Parking[] parkings;  
+    /** The number of parking activities in the array. */
+    private int numParked;       
+    /** True if the deck is open, false if it is closed. */
     private boolean open;
 
     /**
