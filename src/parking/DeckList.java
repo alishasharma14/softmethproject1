@@ -6,10 +6,13 @@ package parking;
  * @author Alisha Sharma
  */
 public class DeckList {
+    /** The initial capacity of the list, and the amount it grows by. */
     private static final int ARRAYLENGTH = 4;
+    /** The index returned when a deck is not found. */
     private static final int NOTFOUND = -1;
-
+    /** The array holding the decks, open or closed. */
     private Deck[] decks;
+    /** The number of decks in the list. */
     private int numDecks;
 
     /**
@@ -180,5 +183,6 @@ public class DeckList {
         int index = find(deck);
         if (index != NOTFOUND) {
         decks[index].printByPlate();
+    }
     }
 }
