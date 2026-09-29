@@ -4,11 +4,14 @@ package parking;
  * A vehicle registered for parking, identified by its license plate.
  * Each vehicle keeps a singly linked list of its parking history.
  *
- * @author Alisha Sharma
+ * @author Alisha Sharma, Ann Sajan
  */
 public class Vehicle {
+    /** The number of characters in a valid license plate. */
     private static final int PLATE_LENGTH = 7;
+    /** The index of the dash in a license plate. */
     private static final int DASH_INDEX = 3;
+    /** The character that separates the digits from the last letters. */
     private static final char DASH = '-';
 
     private String plate;     //exactly 7 characters
@@ -73,10 +76,25 @@ public class Vehicle {
     }
 
     /**
+     * Adds a completed parking activity to the front of the history list,
+     * so the newest parking is always first.
+     * @param parking the completed parking activity
+     */
+    public void addHistory(Parking parking){
+        History node = new History(parking);
+        node.setNext(history);
+        history = node;
+    }
+    
+    /**
      * Prints the parking history of this vehicle.
      */
     public void printHistory() {
-        // TODO ann
+        History curr = history;
+        while (curr != null) {
+            System.out.println(curr.getParking());
+        curr = curr.getNext();
+        }
     }
 
     /**
