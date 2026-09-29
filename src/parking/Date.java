@@ -130,6 +130,30 @@ public class Date implements Comparable<Date> {
         return 0; 
     }
 
+    /**
+     * Returns the year of this date.
+     * @return the year
+     */
+    public int getYear() {
+        return year;
+    }
+
+    /**
+     * Returns the month of this date, where January is 1.
+     * @return the month
+     */
+    public int getMonth() {
+        return month;
+    }
+
+    /**
+     * Returns the day of the month.
+     * @return the day
+     */
+    public int getDay() {
+        return day;
+    }
+
 /**
  * Checks whether another object is the same date.
  * @param obj the object to compare to
