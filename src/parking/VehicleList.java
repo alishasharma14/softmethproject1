@@ -7,10 +7,13 @@ package parking;
  * @author Alisha Sharma
  */
 public class VehicleList {
+    /** The initial capacity of the list, and the amount it grows by. */
     private static final int LENGTH = 4;
+    /** The index returned when a vehicle is not found. */
     private static final int NOTFOUND = -1;
-
+    /** The array holding the registered vehicles. */
     private Vehicle[] vehicles;
+    /** The number of vehicles in the list. */
     private int numVehicles;
 
     /**
@@ -137,7 +140,15 @@ public class VehicleList {
      * Prints the parking history of all vehicles ordered by plate then by entry time.
      */
     public void printHistory() {
-        // TODO ann: can call sortByPlate() first, then each
-        // vehicle's history.
+       if (numVehicles == 0) {
+            System.out.println("Deck list is empty - no deck is open.");
+            return;
+        }
+        sortByPlate();
+        System.out.println("** Parking history for all vehicles, ordered by plate/timestamp **");
+        for (int i = 0; i < numVehicles; i++) {
+            vehicles[i].printHistory();
+        }
+        System.out.println("** end of parking history **");
     }
 }
