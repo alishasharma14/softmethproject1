@@ -26,10 +26,15 @@ public class Operation {
     /** The value returned for a token that is not a valid number. */
     private static final int INVALID = -1;
 
+    private static final char PICKUP_CODE = 'P';
+    private static final char VAN_CODE = 'V';
+
     /** The registered vehicles. */
     private VehicleList vehicles;
     /** The parking decks. */
     private DeckList decks;
+
+    private Notification notification;
 
     /**
      * Creates the user interface with an empty vehicle list and deck list.
@@ -37,6 +42,7 @@ public class Operation {
     public Operation() {
         vehicles = new VehicleList();
         decks = new DeckList();
+        notification = new Notification();
     }
 
     /**
@@ -57,6 +63,22 @@ public class Operation {
             case "PH" -> printHistory(tokens);
             default -> System.out.println(command + " is an invalid command!");
         }
+    }
+
+    /**
+     * Creates the right type of vehicle from the first letter of the plate.
+     * @param plate the license plate.
+     * @return a Pickup for 'P' Van for 'V' Sedan otherwise.
+     */
+    private Vehicle createVehicle(String plate) {
+        char type = Character.toUpperCase(plate.charAt(0));
+        if (type == PICKUP_CODE) {
+            return new Pickup(plate);
+        }
+        if (type == VAN_CODE) {
+            return new Van(plate);
+        }
+        return new Sedan(plate);
     }
 
     /**
@@ -109,7 +131,7 @@ public class Operation {
             return;
         }
         String plate = tokens.nextToken();
-        Vehicle vehicle = new Vehicle(plate);
+        Vehicle vehicle = createVehicle(plate);
         if (!vehicle.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;
@@ -119,6 +141,7 @@ public class Operation {
             return;
         }
         vehicles.add(vehicle);
+        notification.register(vehicle);
         System.out.println(plate + " registered.");
     }
 
@@ -131,7 +154,7 @@ public class Operation {
             return;
         }
         String plate = tokens.nextToken();
-        Vehicle vehicle = new Vehicle(plate);
+        Vehicle vehicle = createVehicle(plate);
         if (!vehicle.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;
@@ -151,6 +174,7 @@ public class Operation {
             return;
         }
         vehicles.remove(registered);
+        notification.unregister(registered);
         System.out.println(plate + " unregistered.");
     }
 
@@ -323,7 +347,7 @@ public class Operation {
         if (deck == null) {
             return;
         }
-        Vehicle probe = new Vehicle(plate);
+        Vehicle probe = createVehicle(plate);
         if (!probe.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;
@@ -361,7 +385,7 @@ public class Operation {
             return;
         }
         String plate = tokens.nextToken();
-        Vehicle probe = new Vehicle(plate);
+        Vehicle probe = createVehicle(plate);
         if (!probe.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;
@@ -445,7 +469,7 @@ public class Operation {
             return;
         }
         String plate = tokens.nextToken();
-        Vehicle probe = new Vehicle(plate);
+        Vehicle probe = createVehicle(plate);
         if (!probe.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;

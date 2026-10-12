@@ -7,7 +7,7 @@ import util.List;
  * Each vehicle keeps a list of its parking history
  * @author Alisha Sharma, Ann Sajan
  */
-public class Vehicle {
+public abstract class Vehicle implements Observer {
     /** The number of characters in a valid license plate. */
     private static final int PLATE_LENGTH = 7;
     /** The index of the dash in a license plate. */
@@ -20,6 +20,8 @@ public class Vehicle {
     /** The completed parking activities, oldest first. */
     private List<History> history;
 
+    /**the nofications this vehicle received */
+    private List<String>notifications;
     /**
      * Creates a vehicle with the given license plate and no parking history.
      * The plate is stored in uppercase so "r48-jik" and "R48-JIK" match.
@@ -28,6 +30,7 @@ public class Vehicle {
     public Vehicle(String plate) {
         this.plate = plate.toUpperCase();
         this.history = new List<History>();
+        this.notifications = new List<String>();
     }
 
     /**
@@ -89,6 +92,32 @@ public class Vehicle {
      */
     public void addHistory(Parking parking) {
         history.add(new History(parking));
+    }
+
+    /**
+     * Calculates the parking fee based on the vehicle type and duration.
+     * @param deck the deck where the vehicle parked.
+     * @param enter the time the vehicle entered.
+     * @param exit the time the vehicle exited.
+     * @return the parking fee in dollars.
+     */
+    public abstract int parkingFee(Deck deck, Timestamp enter, Timestamp exit);
+
+    /**
+     * Receives a notification and saves it
+     * @param message the notification message
+     */
+    @Override
+    public void update(String message) {
+        notifications.add(message);
+    }
+
+    /**
+     * Returns the notifications this vehicle has received
+     * @return the list of notifications
+     */
+    public List<String> getNotifications() {
+        return notifications;
     }
 
     /**
