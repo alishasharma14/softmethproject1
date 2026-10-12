@@ -2,6 +2,7 @@ package util;
 
 import parking.Deck;
 import parking.Vehicle;
+import parking.Parking;
 
 /**
  * A utility class for sorting lists of objects in place with insertion sort
@@ -67,6 +68,23 @@ public class Sort {
             Deck current = list.get(i);
             int j = i - 1;
             while (j >= 0 && list.get(j).getNumber() > current.getNumber()) {
+                list.set(j + 1, list.get(j));
+                j--;
+            }
+            list.set(j + 1, current);
+        }
+    }
+
+    /**
+     * Sorts a list of parking activities by license plate.
+     * @param list the list of parking activities to sort.
+     */
+    public static void parkingsByPlate(List<Parking> list) {
+        for (int i = 1; i < list.size(); i++) {
+            Parking current = list.get(i);
+            int j = i - 1;
+            while (j >= 0 && list.get(j).getVehicle().getPlate()
+                    .compareTo(current.getVehicle().getPlate()) > 0) {
                 list.set(j + 1, list.get(j));
                 j--;
             }

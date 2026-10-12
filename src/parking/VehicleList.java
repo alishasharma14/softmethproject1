@@ -51,8 +51,18 @@ public class VehicleList extends List<Vehicle> {
         Sort.vehiclesByPlate(this);
         System.out.println("** Parking history for all vehicles, ordered by plate/timestamp **");
         for (int i = 0; i < size(); i++) {
-            get(i).printHistory();
+            printHistory(get(i));
         }
         System.out.println("** end of parking history **");
+    }
+
+    /**
+     * Prints the parking history of one vehicle, oldest first.
+     * @param vehicle the vehicle whose history is printed.
+     */
+    public void printHistory(Vehicle vehicle) {
+        for (History record : vehicle.getHistory()) {
+            System.out.println(record.getParking());
+        }
     }
 }

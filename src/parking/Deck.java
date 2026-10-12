@@ -1,24 +1,29 @@
 package parking;
 
+import util.List;
+
 /**
- * A parking deck with its location, operating hours, and parked vehicles.
+ * a parking deck, it has a location and hours and the cars parked in it
  * @author Alisha Sharma, Ann Sajan
  */
 public class Deck {
-     /** The maximum number of vehicles any deck can hold. */
-    public static final int MAXCAPACITY = 6;
-    /** The index returned when a vehicle is not found. */
+    /** what find returns when the vehicle isnt there */
     private static final int NOTFOUND = -1;
+    /** The maximum number of vehicles any deck can hold. */
+    public static final int MAXCAPACITY = 6;
+
     /** The deck number. */
-    private int number;          
-    /** The city where the deck is located. */
-    private Location location;   //Location is an enum class
+    private int number;
+    /** the city the deck is in */
+    private Location location;
     /** The operating hours of the deck. */
-    private Hour hour;           //Hour is an enum class
-     /** The parking activities of the vehicles currently in the deck. */
-    private Parking[] parkings;  
-    /** The number of parking activities in the array. */
-    private int numParked;       
+    private Hour hour;
+    /** The parking activities of the vehicles currently in the deck. */
+    private List<Parking> parkings;
+    /** max number of cars that can fit */
+    private int capacity;
+    /** The total parking fees this deck has collected, in dollars. */
+    private int feesCollected;
     /** True if the deck is open, false if it is closed. */
     private boolean open;
 
@@ -31,7 +36,7 @@ public class Deck {
     }
 
     /**
-     * Creates an open deck with no vehicles parked.
+     * makes an open deck with no cars in it yet and no fees
      * @param number the deck number.
      * @param location the city where the deck is located.
      * @param hour the operating hours.
@@ -41,8 +46,9 @@ public class Deck {
         this.number = number;
         this.location = location;
         this.hour = hour;
-        this.parkings = new Parking[capacity];
-        this.numParked = 0;
+        this.capacity = capacity;
+        this.parkings = new List<Parking>();
+        this.feesCollected = 0;
         this.open = true;
     }
 
@@ -52,53 +58,33 @@ public class Deck {
      * @return the index of the parking activity or NOTFOUND if not parked.
      */
     private int find(Vehicle vehicle) {
-        for(int i = 0; i< numParked; i++){
-          if (parkings[i].getVehicle().equals(vehicle)){
-              return i;
-          }
-        }
-        return NOTFOUND; 
-    }
-    /**
-     * Sorts the parking activities by license plate with selection sort.
-     */
-    private void sortByPlate() {
-        for (int i = 0; i < numParked - 1; i++) {
-            int min = i;
-            for (int j = i + 1; j < numParked; j++) {
-                String plateJ = parkings[j].getVehicle().getPlate();
-                String plateMin = parkings[min].getVehicle().getPlate();
-                if (plateJ.compareTo(plateMin) < 0) {
-                    min = j;
-                }
+        for (int i = 0; i < parkings.size(); i++) {
+            if (parkings.get(i).getVehicle().equals(vehicle)) {
+                return i;
             }
-            Parking temp = parkings[i];
-            parkings[i] = parkings[min];
-            parkings[min] = temp;
         }
+        return NOTFOUND;
     }
 
     /**
-     * Adds a parking activity when a vehicle enters the deck.
+     * adds a parking activity when a car comes in
      * @param parking the parking activity to add.
      */
     public void enter(Parking parking) {
-        parkings[numParked] = parking;
-        numParked++;
+        parkings.add(parking);
     }
 
     /**
      * Removes a parking activity when a vehicle exits the deck.
+     * It does nothing if the vehicle isnt parked here
      * @param parking the parking activity to remove.
      */
     public void exit(Parking parking) {
-         int index = find(parking.getVehicle());
+        int index = find(parking.getVehicle());
         if (index == NOTFOUND) {
             return;
         }
-        numParked--;
-        parkings[index] = parkings[numParked];
-        parkings[numParked] = null;
+        parkings.remove(parkings.get(index));
     }
 
     /**
@@ -109,31 +95,43 @@ public class Deck {
     public boolean contains(Vehicle vehicle) {
         return find(vehicle) != NOTFOUND;
     }
+
     /**
      * Returns the parking activity of a vehicle in this deck.
      * @param vehicle the vehicle to search for.
      * @return the parking activity, or null if the vehicle is not parked here.
      */
     public Parking getParking(Vehicle vehicle) {
-    int index = find(vehicle);
-    if (index == NOTFOUND) {
-        return null;
-    }
-    return parkings[index];
-}
-    /**
-     * Prints the vehicles parked in this deck, ordered by license plate.
-     */
-    public void printByPlate() {
-        sortByPlate();
-        System.out.println("** List of vehicles in Deck# " + number
-                + ", ordered by plate **");
-        for (int i = 0; i < numParked; i++) {
-            System.out.println(parkings[i]);
+        int index = find(vehicle);
+        if (index == NOTFOUND) {
+            return null;
         }
-        System.out.println("** end of list **");
+        return parkings.get(index);
     }
 
+    /**
+     * gives back the list of parking activities so DeckList can print them
+     * @return the parking activities of the vehicles in the deck.
+     */
+    public List<Parking> getParkings() {
+        return parkings;
+    }
+
+    /**
+     * Adds a parking fee to the total fees collected by this deck.
+     * @param fee the fee to add, in dollars.
+     */
+    public void addFee(int fee) {
+        feesCollected += fee;
+    }
+
+    /**
+     * Returns the total fees collected by this deck.
+     * @return the total fees, in dollars.
+     */
+    public int getFeesCollected() {
+        return feesCollected;
+    }
 
     /**
      * Returns the deck number.
@@ -160,7 +158,7 @@ public class Deck {
     }
 
     /**
-     * Checks if the deck is open.
+     * checks if the deck is open
      * @return true if the deck is open, false if closed.
      */
     public boolean isOpen() {
@@ -180,15 +178,15 @@ public class Deck {
      * @return true if the deck is full, otherwise false.
      */
     public boolean isFull() {
-        return numParked == parkings.length;
+        return parkings.size() == capacity;
     }
 
     /**
-     * Checks if any vehicle is parked in the deck.
+     * checks if theres any car parked in the deck right now
      * @return true if at least one vehicle is parked, otherwise false.
      */
     public boolean hasVehicles() {
-        return numParked > 0;
+        return !parkings.isEmpty();
     }
 
     /**
@@ -211,9 +209,10 @@ public class Deck {
      */
     @Override
     public String toString() {
+        int numParked = parkings.size();
         String vehicleWord = (numParked == 1) ? " vehicle" : " vehicles";
         return "Deck#" + number + "@" + location.name()
-                + "[open " + hour + "] [capacity " + parkings.length + "] ["
+                + "[open " + hour + "] [capacity " + capacity + "] ["
                 + numParked + vehicleWord + "] [" + location.getCounty() + "]";
     }
 }

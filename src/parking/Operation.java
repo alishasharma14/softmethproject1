@@ -457,7 +457,7 @@ public class Operation {
             System.out.println(vehicle + " - no parking history.");
         } else {
             System.out.println("** Parking history for " + vehicle + "**");
-            vehicle.printHistory();
+            vehicles.printHistory(vehicle);
             System.out.println("** end of list **");
         }
     }

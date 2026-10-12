@@ -2,6 +2,7 @@ package parking;
 
 import util.List;
 import util.Sort;
+import parking.Parking;
 
 /**
  * The list of parking decks built on the generic List class.
@@ -94,13 +95,21 @@ public class DeckList extends List<Deck> {
     }
 
     /**
-     * Prints the vehicles parked in a deck ordered by license plate.
+     * prints the cars parked in a deck, ordered by license plate
      * @param deck the deck to print.
      */
     public void printVehicles(Deck deck) {
         int index = indexOf(deck);
-        if (index != NOT_FOUND) {
-            get(index).printByPlate();
+        if (index == NOT_FOUND) {
+            return;
         }
+        Deck found = get(index);
+        Sort.parkingsByPlate(found.getParkings());
+        System.out.println("** List of vehicles in Deck# " + found.getNumber()
+                + ", ordered by plate **");
+        for (Parking parking : found.getParkings()) {
+            System.out.println(parking);
+        }
+        System.out.println("** end of list **");
     }
 }
