@@ -1,5 +1,7 @@
 package parking;
 
+import util.Date;
+
 import java.util.Scanner;
 import java.util.StringTokenizer;
 

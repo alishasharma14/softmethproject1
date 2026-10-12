@@ -1,4 +1,4 @@
-package parking;
+package util;
 
 import java.util.Calendar;
 
