@@ -10,11 +10,14 @@ import java.util.Iterator;
  * @author Alisha Sharma
  */
 public class List<E> implements Iterable<E> {
+    /** The starting capacity, and the amount the array grows by. */
     private static final int CAPACITY = 4;
+    /** The value returned when an object is not found. */
     private static final int NOT_FOUND = -1;
-
-    private E[] objects; //E is the name for the generic type
-    private int size;    //number of elements in the array
+    /** The array that holds the objects. E is the name for the generic type. */
+    private E[] objects; 
+    /** The number of elements in the array. */
+    private int size;    
 
     /**
      * Creates an empty list with capacity of 4.
