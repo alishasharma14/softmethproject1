@@ -1,7 +1,7 @@
 package parking;
 
 /**
- * Driver class that runs Project 1.
+ * Driver class that runs Project 2.
  *
  * @author Alisha Sharma
  */
