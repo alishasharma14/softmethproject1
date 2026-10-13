@@ -10,11 +10,15 @@ public enum Hour {
     HR6(6, 30, 18, 30),
     HR7(7, 0, 18, 0);
 
+    /** The number of minutes in one hour. */
     private static final int MINUTES_PER_HOUR = 60;
-
+    /** The hour the deck opens. */
     private final int startHour;
+    /** The minute the deck opens. */
     private final int startMinute;
+    /** The hour the deck closes. */
     private final int endHour;
+    /** The minute the deck closes. */
     private final int endMinute;
 
     /**
