@@ -18,6 +18,12 @@ public class Parking {
      * The time the vehicle exited the deck, or null if still parked.
      */
     private Timestamp exit;
+    /**
+     * The number of the deck the vehicle parked in.
+     */
+    private int deckNum;
+
+    
 
     /**
      * Creates a parking activity for a vehicle that has just entered a deck.
@@ -25,11 +31,13 @@ public class Parking {
      *
      * @param vehicle the vehicle that entered
      * @param enter   the time the vehicle entered
+     * @param deckNum the number of the deck the vehicle entered
      */
-    public Parking(Vehicle vehicle, Timestamp enter) {
+    public Parking(Vehicle vehicle, Timestamp enter, int deckNum) {
         this.vehicle = vehicle;
         this.enter = enter;
         this.exit = null;
+        this.deckNum = deckNum;
     }
 
     /**
@@ -66,6 +74,16 @@ public class Parking {
      */
     public void setExit(Timestamp exit) {
         this.exit = exit;
+    }
+     /**
+     * Returns the parking activity as a line of parking history, such as
+     * [entered Deck# 110: 2026-03-09 10:48][exited: 2026-03-09 11:50].
+     *
+     * @return the history text of the parking activity
+     */
+    public String historyText() {
+          return "     [entered Deck# " + deckNum + ": " + enter
+                + "][exited: " + exit + "]";
     }
 
     /**
