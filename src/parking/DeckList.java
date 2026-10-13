@@ -81,7 +81,7 @@ public class DeckList extends List<Deck> {
      */
     public void printByLocation() {
         if (!hasOpenDeck()) {
-            System.out.println("Deck list is empty, no deck is open.");
+            System.out.println("Deck list is empty - no deck is open.");
             return;
         }
         Sort.decksByLocation(this);

@@ -1,10 +1,14 @@
 package parking;
 
 /**
- * A pickup. charged the pickup hourly and daily rates.
+ * a pickup truck. pays $4 an hour or $30 for the day
  * @author Alisha Sharma
  */
 public class Pickup extends Vehicle {
+    /** The hourly rate for a pickup in dollars. */
+    private static final int HOURLY_RATE = 4;
+    /** The daily rate for a pickup in dollars. */
+    private static final int DAILY_RATE = 30;
 
     /**
      * Creates a pickup with the given license plate.
@@ -15,7 +19,7 @@ public class Pickup extends Vehicle {
     }
 
     /**
-     * Calculates the pickup parking fee.
+     * Calculates the parking fee for a pickup truck.
      * @param deck the deck where the vehicle parked.
      * @param enter the time the vehicle entered.
      * @param exit the time the vehicle exited.
@@ -23,6 +27,6 @@ public class Pickup extends Vehicle {
      */
     @Override
     public int parkingFee(Deck deck, Timestamp enter, Timestamp exit) {
-        return 0; // TODO: fee calculation
+        return calculateFee(deck, enter, exit, HOURLY_RATE, DAILY_RATE);
     }
 }

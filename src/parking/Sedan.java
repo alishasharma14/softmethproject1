@@ -1,13 +1,17 @@
 package parking;
 
 /**
- * A sedan. charged the sedan hourly and daily rates.
+ * a sedan. it pays $2 an hour or $18 for the day
  * @author Alisha Sharma
  */
 public class Sedan extends Vehicle {
+    /** The hourly rate for a sedan in dollars. */
+    private static final int HOURLY_RATE = 2;
+    /** the daily rate for a sedan in dollars */
+    private static final int DAILY_RATE = 18;
 
     /**
-     * Creates a sedan with the given license plate.
+     * makes a sedan with the given plate
      * @param plate the license plate.
      */
     public Sedan(String plate) {
@@ -15,7 +19,7 @@ public class Sedan extends Vehicle {
     }
 
     /**
-     * Calculates the sedan parking fee.
+     * Calculates the parking fee for a sedan.
      * @param deck the deck where the vehicle parked.
      * @param enter the time the vehicle entered.
      * @param exit the time the vehicle exited.
@@ -23,6 +27,6 @@ public class Sedan extends Vehicle {
      */
     @Override
     public int parkingFee(Deck deck, Timestamp enter, Timestamp exit) {
-        return 0; // TODO: fee calculation
+        return calculateFee(deck, enter, exit, HOURLY_RATE, DAILY_RATE);
     }
 }

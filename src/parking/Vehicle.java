@@ -1,10 +1,13 @@
 package parking;
 
+import util.Date;
 import util.List;
+
+import java.util.Calendar;
 
 /**
  * a vehicle thats registered for parking, we identify it by its license plate.
- * Each vehicle keeps a list of its parking history
+ * Each vehicle keeps its parking history and the notifications it got
  * @author Alisha Sharma, Ann Sajan
  */
 public abstract class Vehicle implements Observer {
@@ -14,23 +17,106 @@ public abstract class Vehicle implements Observer {
     private static final int DASH_INDEX = 3;
     /** the dash between the numbers and the letters at the end */
     private static final char DASH = '-';
+    /** minutes in one hour */
+    private static final int MINUTES_PER_HOUR = 60;
+    /** The number of minutes in one day. */
+    private static final int MINUTES_PER_DAY = 1440;
+    /** milliseconds in one day, used for counting days between two dates */
+    private static final long MILLIS_PER_DAY = 86400000L;
+    /** if a car stays more than this many hours in one day it pays the daily rate */
+    private static final int MAX_HOURLY = 6;
 
-    /** The license plate, exactly 7 characters. */
+    /** The license plate, kept the way the user typed it. */
     private String plate;
     /** The completed parking activities, oldest first. */
     private List<History> history;
+    /** the notifications this vehicle got */
+    private List<String> notifications;
 
-    /**the nofications this vehicle received */
-    private List<String>notifications;
     /**
      * Creates a vehicle with the given license plate and no parking history.
-     * The plate is stored in uppercase so "r48-jik" and "R48-JIK" match.
      * @param plate the license plate.
      */
     public Vehicle(String plate) {
-        this.plate = plate.toUpperCase();
+        this.plate = plate;
         this.history = new List<History>();
         this.notifications = new List<String>();
+    }
+
+    /**
+     * turns a date into a Calendar at midnight so we can do math with it
+     * @param date the date to convert.
+     * @return a Calendar set to midnight on that date.
+     */
+    private Calendar toCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(date.getYear(), date.getMonth() - Date.JAN, date.getDay());
+        return calendar;
+    }
+
+    /**
+     * Counts how many days apart two dates are.
+     * @param first the earlier date.
+     * @param second the later date.
+     * @return the number of days from the first date to the second.
+     */
+    private int daysBetween(Date first, Date second) {
+        long difference = toCalendar(second).getTimeInMillis()
+                - toCalendar(first).getTimeInMillis();
+        return (int) Math.round((double) difference / MILLIS_PER_DAY);
+    }
+
+    /**
+     * gets how many minutes past midnight a timestamp is
+     * @param time the timestamp.
+     * @return the minutes since midnight.
+     */
+    private int minuteOfDay(Timestamp time) {
+        return time.getHour() * MINUTES_PER_HOUR + time.getMinute();
+    }
+
+    /**
+     * Calculates the fee for one day of parking. Partial hours count as a
+     * full hour, and more than 6 hours pays the daily rate instead
+     * @param minutes the minutes parked during that day.
+     * @param hourlyRate the hourly rate for this vehicle type.
+     * @param dailyRate the daily rate for this vehicle type.
+     * @return the fee for that day, in dollars.
+     */
+    private int segmentFee(int minutes, int hourlyRate, int dailyRate) {
+        int hours = (minutes + MINUTES_PER_HOUR - 1) / MINUTES_PER_HOUR;
+        if (hours > MAX_HOURLY) {
+            return dailyRate;
+        }
+        return hours * hourlyRate;
+    }
+
+    /**
+     * calculates the total fee. the stay gets split into days that start at
+     * the decks opening time and each day is charged on its own
+     * @param deck the deck where the vehicle parked.
+     * @param enter the time the vehicle entered.
+     * @param exit the time the vehicle exited.
+     * @param hourlyRate the hourly rate for this vehicle type.
+     * @param dailyRate the daily rate for this vehicle type.
+     * @return the total parking fee, in dollars.
+     */
+    protected int calculateFee(Deck deck, Timestamp enter, Timestamp exit,
+                               int hourlyRate, int dailyRate) {
+        int opening = deck.getHour().getStartHour() * MINUTES_PER_HOUR
+                + deck.getHour().getStartMinute();
+        int start = minuteOfDay(enter);
+        int end = daysBetween(enter.getDate(), exit.getDate()) * MINUTES_PER_DAY
+                + minuteOfDay(exit);
+        int fee = 0;
+        while (start < end) {
+            int nextOpening = (start / MINUTES_PER_DAY + 1) * MINUTES_PER_DAY + opening;
+            int segmentEnd = Math.min(end, nextOpening);
+            fee += segmentFee(segmentEnd - start, hourlyRate, dailyRate);
+            start = segmentEnd;
+        }
+        return fee;
     }
 
     /**
@@ -87,7 +173,7 @@ public abstract class Vehicle implements Observer {
 
     /**
      * adds a finished parking activity to the end of the history, so the
-     * oldest one is always first and the newest is last
+     * oldest one is always first
      * @param parking the completed parking activity
      */
     public void addHistory(Parking parking) {
@@ -95,17 +181,17 @@ public abstract class Vehicle implements Observer {
     }
 
     /**
-     * Calculates the parking fee based on the vehicle type and duration.
+     * Calculates the parking fee based on the vehicle type and how long it stayed.
      * @param deck the deck where the vehicle parked.
      * @param enter the time the vehicle entered.
      * @param exit the time the vehicle exited.
-     * @return the parking fee in dollars.
+     * @return the parking fee, in dollars.
      */
     public abstract int parkingFee(Deck deck, Timestamp enter, Timestamp exit);
 
     /**
-     * Receives a notification and saves it
-     * @param message the notification message
+     * gets a notification and saves it
+     * @param message the notification message.
      */
     @Override
     public void update(String message) {
@@ -113,15 +199,15 @@ public abstract class Vehicle implements Observer {
     }
 
     /**
-     * Returns the notifications this vehicle has received
-     * @return the list of notifications
+     * Returns the notifications this vehicle has received.
+     * @return the list of notifications.
      */
     public List<String> getNotifications() {
         return notifications;
     }
 
     /**
-     * Checks if two vehicles have the same license plate.
+     * Checks if two vehicles have the same license plate, ignoring upper and lower case.
      * @param obj the object to compare with.
      * @return true if obj is a vehicle with the same plate, otherwise false.
      */
@@ -129,17 +215,17 @@ public abstract class Vehicle implements Observer {
     public boolean equals(Object obj) {
         if (obj instanceof Vehicle) {
             Vehicle other = (Vehicle) obj;
-            return plate.equals(other.plate);
+            return plate.equalsIgnoreCase(other.plate);
         }
         return false;
     }
 
     /**
-     * Returns the license plate as the text form of this vehicle.
-     * @return the license plate.
+     * returns the plate and the type, like "Z22-KVQ [Sedan]"
+     * @return the text form of the vehicle.
      */
     @Override
     public String toString() {
-        return plate;
+        return plate + " [" + getClass().getSimpleName() + "]";
     }
 }

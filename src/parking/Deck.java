@@ -209,10 +209,8 @@ public class Deck {
      */
     @Override
     public String toString() {
-        int numParked = parkings.size();
-        String vehicleWord = (numParked == 1) ? " vehicle" : " vehicles";
         return "Deck#" + number + "@" + location.name()
                 + "[open " + hour + "] [capacity " + capacity + "] ["
-                + numParked + vehicleWord + "] [" + location.getCounty() + "]";
+                + parkings.size() + " vehicles] [" + location.getCounty() + "]";
     }
 }

@@ -76,4 +76,20 @@ public enum Hour {
         return startHour + ":" + String.format("%02d", startMinute) + " ~ "
                 + endHour + ":" + String.format("%02d", endMinute);
     }
+
+    /**
+     * returns the hour the deck opens
+     * @return the opening hour.
+     */
+    public int getStartHour() {
+        return startHour;
+    }
+
+    /**
+     * Returns the minute the deck opens.
+     * @return the opening minute.
+     */
+    public int getStartMinute() {
+        return startMinute;
+    }
 }

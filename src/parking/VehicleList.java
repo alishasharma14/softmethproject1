@@ -29,7 +29,7 @@ public class VehicleList extends List<Vehicle> {
      */
     public void printByPlate() {
         if (isEmpty()) {
-            System.out.println("Vehicle list is empty, no vehicle is registered.");
+            System.out.println("Vehicle list is empty - no vehicle is registered.");
             return;
         }
         Sort.vehiclesByPlate(this);
@@ -45,7 +45,7 @@ public class VehicleList extends List<Vehicle> {
      */
     public void printHistory() {
         if (size() == 0) {
-            System.out.println("Deck list is empty, no deck is open.");
+            System.out.println("Deck list is empty - no deck is open.");
             return;
         }
         Sort.vehiclesByPlate(this);
