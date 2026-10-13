@@ -421,7 +421,7 @@ public class Operation {
                     + deck.getHour());
             return;
         }
-        deck.enter(new Parking(vehicle, stamp));
+        deck.enter(new Parking(vehicle, stamp, deck.getNumber()));
         System.out.println(vehicle + " entered Deck#" + deck.getNumber() + " on " + stamp);
         if (deck.isFull()) {
             notification.notify("Deck# " + deck.getNumber() + " is full.");
