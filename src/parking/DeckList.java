@@ -10,6 +10,7 @@ import parking.Parking;
  * @author Alisha Sharma, Ann Sajan
  */
 public class DeckList extends List<Deck> {
+    /** What indexOf returns when the vehicle is not in the list. */
     private static final int NOT_FOUND = -1;
 
     /**
