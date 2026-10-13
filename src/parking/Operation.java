@@ -44,8 +44,13 @@ public class Operation {
      * The value returned for a token that is not a valid number.
      */
     private static final int INVALID = -1;
-
+    /** 
+    * The first plate character that marks a pickup truck. 
+    */
     private static final char PICKUP_CODE = 'P';
+    /** 
+    * The first plate character that marks a van. 
+    */
     private static final char VAN_CODE = 'V';
 
     /**
@@ -56,7 +61,9 @@ public class Operation {
      * The parking decks.
      */
     private DeckList decks;
-
+    /** 
+    * The notification system that sends messages to registered vehicles. 
+    */
     private Notification notification;
 
     /**
