@@ -13,7 +13,9 @@ public enum Location {
     MORRISTOWN("Morris", "07960"),
     CLARK("Union", "07066");
 
+    /** The county where the deck is located. */
     private final String county;
+    /** The zip code of the deck. */
     private final String zip;
 
     /**
