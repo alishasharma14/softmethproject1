@@ -6,16 +6,18 @@ import parking.Parking;
 
 /**
  * A utility class for sorting lists of objects in place with insertion sort
+ *
  * @author Alisha Sharma
  */
 public class Sort {
 
     /**
      * Compares two decks by county then by deck number.
-     * @param first the first deck.
+     *
+     * @param first  the first deck.
      * @param second the second deck.
      * @return a negative number if first comes before second, a positive
-     *         number if it comes after, or 0 if they are in the same place
+     * number if it comes after, or 0 if they are in the same place
      */
     private static int compareByLocation(Deck first, Deck second) {
         int countyOrder = first.getLocation().getCounty()
@@ -28,6 +30,7 @@ public class Sort {
 
     /**
      * Sorts a list of vehicles by license plate
+     *
      * @param list the list of vehicles to sort.
      */
     public static void vehiclesByPlate(List<Vehicle> list) {
@@ -45,6 +48,7 @@ public class Sort {
 
     /**
      * Sorts a list of decks by county then by deck number
+     *
      * @param list the list of decks to sort.
      */
     public static void decksByLocation(List<Deck> list) {
@@ -61,6 +65,7 @@ public class Sort {
 
     /**
      * Sorts a list of decks by deck number
+     *
      * @param list the list of decks to sort.
      */
     public static void decksByNumber(List<Deck> list) {
@@ -77,6 +82,7 @@ public class Sort {
 
     /**
      * Sorts a list of parking activities by license plate.
+     *
      * @param list the list of parking activities to sort.
      */
     public static void parkingsByPlate(List<Parking> list) {

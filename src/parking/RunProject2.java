@@ -2,6 +2,7 @@ package parking;
 
 /**
  * Driver class that runs Project 1.
+ *
  * @author Alisha Sharma
  */
 public class RunProject2 {

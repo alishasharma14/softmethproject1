@@ -5,6 +5,7 @@ import util.Sort;
 
 /**
  * The list of registered vehicles built on the generic List class.
+ *
  * @author Alisha Sharma, Ann Sajan
  */
 public class VehicleList extends List<Vehicle> {
@@ -13,6 +14,7 @@ public class VehicleList extends List<Vehicle> {
     /**
      * Returns the registered vehicle with the same plate as the given one.
      * Use this to get the stored vehicle which holds the parking history.
+     *
      * @param vehicle a vehicle with the plate to search for.
      * @return the registered vehicle or null if not in the list.
      */
@@ -58,6 +60,7 @@ public class VehicleList extends List<Vehicle> {
 
     /**
      * Prints the parking history of one vehicle, oldest first.
+     *
      * @param vehicle the vehicle whose history is printed.
      */
     public void printHistory(Vehicle vehicle) {

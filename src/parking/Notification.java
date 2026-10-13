@@ -4,6 +4,7 @@ import util.List;
 
 /**
  * Sends system notifications to every registered vehicle
+ *
  * @author Alisha Sharma
  */
 public class Notification implements Subject {
@@ -18,6 +19,7 @@ public class Notification implements Subject {
 
     /**
      * Subscribes a vehicle, unless it is already subscribed
+     *
      * @param vehicle the vehicle to subscribe
      */
     @Override
@@ -29,6 +31,7 @@ public class Notification implements Subject {
 
     /**
      * Unsubscribes a vehicle
+     *
      * @param vehicle the vehicle to unsubscribe
      */
     @Override
@@ -38,6 +41,7 @@ public class Notification implements Subject {
 
     /**
      * Sends a message to every subscribed vehicle
+     *
      * @param message the notification message
      */
     @Override

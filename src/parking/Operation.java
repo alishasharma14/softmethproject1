@@ -11,31 +11,50 @@ import java.util.StringTokenizer;
 /**
  * The user interface class that reads and processes command lines
  * from the terminal until there is a Q command is entered.
+ *
  * @author Alisha Sharma, Ann Sajan
  */
 public class Operation {
-     /** The number of data tokens needed to open a new deck after its number. */
+    /**
+     * The number of data tokens needed to open a new deck after its number.
+     */
     private static final int DECK_DATA_TOKENS = 3;
     /** The number of data tokens in an E command. */
-    /** the file the L command loads vehicles from */
+    /**
+     * the file the L command loads vehicles from
+     */
     private static final String VEHICLE_FILE = "vehicles.txt";
-    /** The number of data tokens in an X command. */
+    /**
+     * The number of data tokens in an X command.
+     */
     private static final int EXIT_TOKENS = 3;
-    /** The number of parts in a date such as 2026-03-09. */
+    /**
+     * The number of parts in a date such as 2026-03-09.
+     */
     private static final int DATE_PARTS = 3;
-    /** The number of parts in a time such as 10:48. */
+    /**
+     * The number of parts in a time such as 10:48.
+     */
     private static final int TIME_PARTS = 2;
-    /** The longest digit string that safely fits in an int. */
+    /**
+     * The longest digit string that safely fits in an int.
+     */
     private static final int MAX_DIGITS = 9;
-    /** The value returned for a token that is not a valid number. */
+    /**
+     * The value returned for a token that is not a valid number.
+     */
     private static final int INVALID = -1;
 
     private static final char PICKUP_CODE = 'P';
     private static final char VAN_CODE = 'V';
 
-    /** The registered vehicles. */
+    /**
+     * The registered vehicles.
+     */
     private VehicleList vehicles;
-    /** The parking decks. */
+    /**
+     * The parking decks.
+     */
     private DeckList decks;
 
     private Notification notification;
@@ -52,8 +71,9 @@ public class Operation {
     /**
      * sends a command to the method that handles it and catches any
      * exception so the program never crashes
+     *
      * @param command the command, such as "A" or "PP".
-     * @param tokens the data tokens after the command.
+     * @param tokens  the data tokens after the command.
      */
     private void processCommand(String command, StringTokenizer tokens) {
         try {
@@ -83,6 +103,7 @@ public class Operation {
 
     /**
      * Returns the name used in exception messages for a command.
+     *
      * @param command the command, such as "O".
      * @return the command name, such as "Open".
      */
@@ -101,6 +122,7 @@ public class Operation {
 
     /**
      * Creates the right type of vehicle from the first letter of the plate.
+     *
      * @param plate the license plate.
      * @return a Pickup for 'P' Van for 'V' Sedan otherwise.
      */
@@ -117,6 +139,7 @@ public class Operation {
 
     /**
      * Checks if a token contains only digits.
+     *
      * @param token the token to check.
      * @return true if the token is not empty and all digits, otherwise false.
      */
@@ -131,8 +154,10 @@ public class Operation {
         }
         return true;
     }
+
     /**
      * Converts a token of digits to a number without risking an overflow.
+     *
      * @param token the token to convert.
      * @return the number, or INVALID if the token is not all digits or is too long.
      */
@@ -145,6 +170,7 @@ public class Operation {
 
     /**
      * Checks if there is another token and prints a message if there isn't.
+     *
      * @param tokens the data tokens.
      * @return true if there is another token, otherwise false.
      */
@@ -158,6 +184,7 @@ public class Operation {
 
     /**
      * Registers a vehicle and subscribes it to notifications (A command).
+     *
      * @param tokens the data tokens: the license plate.
      */
     private void registerVehicle(StringTokenizer tokens) {
@@ -178,6 +205,7 @@ public class Operation {
 
     /**
      * unregisters a vehicle and unsubscribes it from notifications (R command)
+     *
      * @param tokens the data tokens: the license plate.
      */
     private void removeVehicle(StringTokenizer tokens) {
@@ -208,6 +236,7 @@ public class Operation {
 
     /**
      * Loads vehicles from the text file, skipping ones already registered (L command).
+     *
      * @throws FileNotFoundException if the vehicle file is missing.
      */
     private void loadVehicles() throws FileNotFoundException {
@@ -225,6 +254,7 @@ public class Operation {
 
     /**
      * opens a new deck or reopens a closed one (O command)
+     *
      * @param tokens the data tokens: deck number, city, hours, capacity.
      */
     private void openDeck(StringTokenizer tokens) {
@@ -242,6 +272,7 @@ public class Operation {
 
     /**
      * Checks the city, hours and capacity, then opens a new deck.
+     *
      * @param number the deck number.
      * @param tokens the data tokens: city, hours, capacity.
      */
@@ -272,6 +303,7 @@ public class Operation {
     /**
      * closes an open deck with no cars in it and tells every registered
      * vehicle about it (C command)
+     *
      * @param tokens the data tokens: the deck number.
      */
     private void closeDeck(StringTokenizer tokens) {
@@ -292,10 +324,11 @@ public class Operation {
         }
     }
 
-     /**
+    /**
      * Builds a timestamp from a date token and a time token.
      * Checks the date, then the hour, then the minute, and prints the reason
      * if one is invalid.
+     *
      * @param dateToken the date as typed, such as 2026-03-09.
      * @param timeToken the time as typed, such as 10:48.
      * @return the timestamp, or null if the date or time is invalid.
@@ -332,6 +365,7 @@ public class Operation {
 
     /**
      * finds the deck for the E command and says why if a car cant go in
+     *
      * @param number the deck number.
      * @return the deck, or null if it doesnt exist or is closed or full.
      */
@@ -352,6 +386,7 @@ public class Operation {
     /**
      * Records a vehicle entering a deck, and tells every registered vehicle
      * if the deck becomes full (E command).
+     *
      * @param tokens the data tokens: deck number, plate, date, time.
      */
     private void enterDeck(StringTokenizer tokens) {
@@ -395,6 +430,7 @@ public class Operation {
 
     /**
      * Records vehicle exiting a deck (X command).
+     *
      * @param tokens the data tokens: plate, date, time.
      */
     private void exitDeck(StringTokenizer tokens) {
@@ -426,9 +462,11 @@ public class Operation {
         }
         finishExit(deck, probe, stamp);
     }
+
     /**
      * Checks the exit time against the entry time, then completes the exit.
-     * @param deck the deck the vehicle is in.
+     *
+     * @param deck  the deck the vehicle is in.
      * @param probe a vehicle with the plate that is exiting.
      * @param stamp the exit time.
      */
@@ -453,6 +491,7 @@ public class Operation {
 
     /**
      * Prints the open decks or the vehicles in one deck (PD command).
+     *
      * @param tokens the data tokens: an optional deck number.
      */
     private void printDecks(StringTokenizer tokens) {
@@ -460,7 +499,7 @@ public class Operation {
             decks.printByLocation();
             return;
         }
-       String numberToken = tokens.nextToken();
+        String numberToken = tokens.nextToken();
         int number = toInt(numberToken);
         if (number == INVALID) {
             System.out.println(numberToken
@@ -479,10 +518,11 @@ public class Operation {
 
     /**
      * Prints parking history of all vehicles or one vehicle (PH command).
+     *
      * @param tokens the data tokens: an optional license plate.
      */
     private void printHistory(StringTokenizer tokens) {
-         if (!tokens.hasMoreTokens()) {
+        if (!tokens.hasMoreTokens()) {
             vehicles.printHistory();
             return;
         }
@@ -534,6 +574,7 @@ public class Operation {
 
     /**
      * prints the notifications for every vehicle or one plate (PN command)
+     *
      * @param tokens the data tokens: an optional license plate.
      */
     private void printNotifications(StringTokenizer tokens) {

@@ -5,6 +5,7 @@ import java.util.Iterator;
 /**
  * A generic resizable array list that can hold any type of object.
  * The initial capacity is 4 and it grows by 4 when the list is full.
+ *
  * @param <E> the type of objects in the list.
  * @author Alisha Sharma
  */
@@ -26,6 +27,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Finds an object in the list.
+     *
      * @param e the object to search for.
      * @return the index of the object or -1 if not in the list
      */
@@ -52,6 +54,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Checks if an object is in the list.
+     *
      * @param e the object to search for.
      * @return true if the object is in the list otherwise false.
      */
@@ -61,6 +64,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Adds an object to end of the list.
+     *
      * @param e the object to add.
      */
     public void add(E e) {
@@ -74,6 +78,7 @@ public class List<E> implements Iterable<E> {
     /**
      * Removes the first occurrence of an object and shifts the objects after
      * it one position to the left. It does nothing if the object is not found.
+     *
      * @param e the object to remove.
      */
     public void remove(E e) {
@@ -90,6 +95,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Checks if the list is empty.
+     *
      * @return true if the list has no objects otherwise false.
      */
     public boolean isEmpty() {
@@ -98,6 +104,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Returns the number of objects in the list.
+     *
      * @return the number of objects.
      */
     public int size() {
@@ -106,6 +113,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Returns an iterator for traversing the list with a for-each loop
+     *
      * @return an iterator over the objects in the list.
      */
     @Override
@@ -115,6 +123,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Returns the object at an index.
+     *
      * @param index the index of the object.
      * @return the object at the index or null if the index is out of range.
      */
@@ -128,8 +137,9 @@ public class List<E> implements Iterable<E> {
     /**
      * Replaces the object at an index. does nothing if the index is
      * out of range.
+     *
      * @param index the index to put the object at.
-     * @param e the object to put in the list.
+     * @param e     the object to put in the list.
      */
     public void set(int index, E e) {
         if (index < 0 || index >= size) {
@@ -140,6 +150,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * Returns the index of an object in the list.
+     *
      * @param e the object to search for.
      * @return the index of the object or -1 if not in the list.
      */
@@ -149,6 +160,7 @@ public class List<E> implements Iterable<E> {
 
     /**
      * An iterator for traversing the list one object at a time.
+     *
      * @param <E> the type of objects in the list
      */
     private class ListIterator<E> implements Iterator<E> {
@@ -156,6 +168,7 @@ public class List<E> implements Iterable<E> {
 
         /**
          * Checks if there are more objects to traverse.
+         *
          * @return true if there is another object or false if at the end of the list.
          */
         @Override
@@ -165,6 +178,7 @@ public class List<E> implements Iterable<E> {
 
         /**
          * Returns the object at the current index then moves to the next one.
+         *
          * @return the object at the current index.
          */
         @Override
