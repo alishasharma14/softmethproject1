@@ -8,6 +8,7 @@ import util.List;
  * @author Alisha Sharma
  */
 public class Notification implements Subject {
+    /** The vehicles subscribed to system notifications. */
     private List<Vehicle> vehicles;
 
     /**
