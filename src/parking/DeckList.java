@@ -2,7 +2,6 @@ package parking;
 
 import util.List;
 import util.Sort;
-import parking.Parking;
 
 /**
  * The list of parking decks built on the generic List class.
@@ -10,7 +9,7 @@ import parking.Parking;
  * @author Alisha Sharma, Ann Sajan
  */
 public class DeckList extends List<Deck> {
-    /** What indexOf returns when the vehicle is not in the list. */
+    /** What indexOf returns when the deck is not in the list. */
     private static final int NOT_FOUND = -1;
 
     /**
@@ -120,4 +119,23 @@ public class DeckList extends List<Deck> {
         }
         System.out.println("** end of list **");
     }
+    /**
+     * Prints the fees collected by each deck, ordered by deck number.
+     */
+    public void printFees() {
+        if (isEmpty()) {
+            System.out.println("Deck list is empty - no deck is open.");
+            return;
+        }
+        Sort.decksByNumber(this);
+        System.out.println("** Parking fees, ordered by deck number **");
+        for (Deck deck : this) {
+            if (deck.getFeesCollected() > 0) {
+                System.out.println("Deck#" + deck.getNumber());
+                System.out.println("    ** Fees collected: $ " + deck.getFeesCollected());
+            }
+        }
+        System.out.println("** end of list **");
+    }
+    
 }
