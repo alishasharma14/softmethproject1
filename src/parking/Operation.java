@@ -434,21 +434,17 @@ public class Operation {
      * @param tokens the data tokens: plate, date, time.
      */
     private void exitDeck(StringTokenizer tokens) {
-        if (tokens.countTokens() < EXIT_TOKENS) {
-            System.out.println("Missing data tokens.");
-            return;
-        }
         String plate = tokens.nextToken();
+        String dateToken = tokens.nextToken();
+        String timeToken = tokens.nextToken();
         Vehicle probe = createVehicle(plate);
         if (!probe.isValid()) {
             System.out.println(plate + " - invalid license plate format.");
             return;
         }
         Deck deck = decks.findParked(probe);
-        String dateToken = tokens.nextToken();
-        String timeToken = tokens.nextToken();
         if (deck == null) {
-            System.out.println("Error exiting - " + plate + " is not in a deck.");
+            System.out.println("Error exiting - " + probe + " is not in a deck.");
             return;
         }
         Timestamp stamp = readTimestamp(dateToken, timeToken);
@@ -456,7 +452,7 @@ public class Operation {
             return;
         }
         if (!deck.getHour().isOpen(stamp.getHour(), stamp.getMinute())) {
-            System.out.println("Error exiting - not within the operating hours: "
+            System.out.println("Error exiting - not within the operating hour: "
                     + deck.getHour());
             return;
         }
@@ -483,10 +479,14 @@ public class Operation {
             return;
         }
         parking.setExit(stamp);
+        int fee = parking.getVehicle().parkingFee(deck, entered, stamp);
         deck.exit(parking);
+        deck.addFee(fee);
         parking.getVehicle().addHistory(parking);
         System.out.println(parking.getVehicle() + " exited Deck#"
                 + deck.getNumber() + " on " + stamp);
+        System.out.println("    * Parking Fee: $ " + fee
+                          + " [entered: " + entered + "]");   
     }
 
     /**
@@ -536,9 +536,9 @@ public class Operation {
         if (vehicle == null) {
             System.out.println(plate + " does not exist.");
         } else if (!vehicle.hasHistory()) {
-            System.out.println(vehicle + " - no parking history.");
+            System.out.println(vehicle.getPlate() + " - no parking history.");
         } else {
-            System.out.println("** Parking history for " + vehicle + "**");
+            System.out.println("** Parking history for " + vehicle + " **");
             vehicles.printHistory(vehicle);
             System.out.println("** end of list **");
         }
@@ -569,7 +569,7 @@ public class Operation {
      * Prints the fees collected by each deck (PF command).
      */
     private void printFees() {
-        // TODO (Ann)
+        decks.printFees();
     }
 
     /**
@@ -578,6 +578,25 @@ public class Operation {
      * @param tokens the data tokens: an optional license plate.
      */
     private void printNotifications(StringTokenizer tokens) {
-        // TODO (Ann)
+        if(!tokens.hasMoreTokens()){
+            vehicles.printNotifications();
+            return;
+        }
+        String plate = tokens.nextToken();
+        Vehicle probe = createVehicle(plate);
+        if(!probe.isValid()){
+            System.out.println(plate + " - invalid license plate format.");
+                return;
+        }
+        Vehicle vehicle = vehicles.getVehicle(probe);
+        if(vehicle == null){
+            System.out.println(plate + " does not exist.");
+        } else if (vehicle.getNotifications().isEmpty()){
+            System.out.println(vehicle.getPlate() + " - no notifications." );
+        } else{
+            System.out.println("** Notifications for " + vehicle +  " **");
+            vehicles.printNotifications(vehicle);
+            System.out.println("** end of list **");
+        }
     }
 }
