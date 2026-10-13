@@ -9,6 +9,7 @@ import util.Sort;
  * @author Alisha Sharma, Ann Sajan
  */
 public class VehicleList extends List<Vehicle> {
+    /** What indexOf returns when the vehicle is not in the list. */
     private static final int NOT_FOUND = -1;
 
     /**
@@ -52,9 +53,12 @@ public class VehicleList extends List<Vehicle> {
         }
         Sort.vehiclesByPlate(this);
         System.out.println("** Parking history for all vehicles, ordered by plate/timestamp **");
-        for (int i = 0; i < size(); i++) {
-            printHistory(get(i));
+       for (Vehicle vehicle : this) {
+        if (vehicle.hasHistory()) {
+            System.out.println(vehicle);
+            printHistory(vehicle);
         }
+       }
         System.out.println("** end of parking history **");
     }
 
@@ -65,7 +69,39 @@ public class VehicleList extends List<Vehicle> {
      */
     public void printHistory(Vehicle vehicle) {
         for (History record : vehicle.getHistory()) {
-            System.out.println(record.getParking());
+            System.out.println(record.getParking().historyText());
         }
     }
+    
+/**
+ * Prints the notifications of all vehicles, ordered by license plate.
+ */
+    public void printNotifications() {
+        if (isEmpty()) {
+        System.out.println("Vehicle list is empty - no vehicle is registered.");
+        return;
+    }
+    Sort.vehiclesByPlate(this);
+    System.out.println("** Notifications, ordered by plate **");
+    for (Vehicle vehicle : this) {
+        System.out.println(vehicle);
+        printNotifications(vehicle);
+    }
+    System.out.println("** end of list **");
+}
+    
+/**
+ * Prints the notifications of one vehicle, if it has any.
+ *
+ * @param vehicle the vehicle whose notifications are printed.
+ */
+public void printNotifications(Vehicle vehicle) {
+    if (vehicle.getNotifications().isEmpty()) {
+        return;
+    }
+    System.out.println("    ** notifications ** ");
+    for (String message : vehicle.getNotifications()) {
+        System.out.println("    " + message);
+    }
+}
 }
