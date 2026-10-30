@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(Main.class.getResource("view.fxml"));
+  	Parent root = FXMLLoader.load(Main.class.getResource("view.fxml"));
     stage.setTitle("Parking Deck Management System");
     stage.setScene(new Scene(root));
     stage.show();
